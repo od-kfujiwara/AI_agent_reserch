@@ -17,7 +17,7 @@
       <h1 class="text-2xl font-bold text-sky-700">AIコーディングエージェント インタラクティブレポート</h1>
       <nav id="mainNav" class="mt-2 sm:mt-0 flex flex-wrap justify-center">
         <button class="nav-button active" data-section="intro">はじめに</button>
-        <button class="nav-button" data-section="agents">主要エージェント概要</button>
+        <button class="nav-button" data-section="agents">主要AIエージェント</button>
         <button class="nav-button" data-section="comparison">比較分析</button>
         <button class="nav-button" data-section="outlook">今後の展望</button>
         <button class="nav-button" data-section="conclusion">結論</button>
@@ -37,9 +37,9 @@
     </section>
 
     <section id="agents" class="content-section">
-      <h2 class="section-title">主要AIコーディングエージェントの概要</h2>
-      <p class="mb-6">現在市場で注目されている主要なAIコーディングエージェントを紹介します。各カードをクリックすると、詳細な情報（主な機能、ユニークな強み、対応IDE、価格モデルなど）が表示されます。</p>
-      <div id="agentCardsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <h2 class="section-title">主要AIエージェントの概要</h2>
+      <p class="mb-6">現在市場で注目されている主要なAIエージェントを紹介します。各カードをクリックすると、詳細な情報（主な機能、ユニークな強み、対応IDE、価格モデル、GitHub連携など）が表示されます。本リスト及び詳細は、専門レポートおよび参照URLに基づきます。</p>
+      <div id="agentCardsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       </div>
     </section>
 
@@ -67,11 +67,11 @@
           <table id="comparisonTable" class="min-w-full bg-white">
             <thead>
               <tr>
-                <th data-sort="name">エージェント名（提供企業）</th>
+                <th data-sort="name">AIエージェント名（提供企業）</th>
                 <th data-sort="ide">対応IDE</th>
-                <th data-sort="pricing">価格モデル</th>
+                <th data-sort="pricing">価格モデル（詳細）</th>
                 <th data-sort="autonomy">自律性レベル</th>
-                <th data-sort="privacy">プライバシー/セキュリティ</th>
+                <th data-sort="github_integration">GitHub連携（PR作成）</th>
                 <th data-sort="strength">ユニークな強み</th>
               </tr>
             </thead>
@@ -90,7 +90,7 @@
 
       <div class="my-6">
         <h3 class="text-xl font-semibold text-sky-600 mb-3">差別化要因と選定のポイント</h3>
-        <p class="mb-4 text-sm text-slate-600">AIコーディングエージェントを選定する上で重要な差別化要因です。各項目をクリックして詳細を確認してください。</p>
+        <p class="mb-4 text-sm text-slate-600">AIエージェントを選定する上で重要な差別化要因です。各項目をクリックして詳細を確認してください。</p>
         <div id="differentiationFactorsContainer">
         </div>
       </div>
@@ -137,9 +137,11 @@
 
   <div id="agentModal" class="modal">
     <div class="modal-content">
-      <span class="modal-close" onclick="closeModal()">&times;</span>
-      <h3 id="modalAgentName" class="text-2xl font-bold text-sky-700 mb-4"></h3>
-      <div id="modalAgentDetails" class="space-y-3 text-slate-700"></div>
+      <div class="modal-header">
+        <h3 id="modalAgentName" class="text-2xl font-bold text-sky-700"></h3>
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+      </div>
+      <div id="modalAgentDetails" class="text-slate-700 detail-grid"></div>
     </div>
   </div>
 
