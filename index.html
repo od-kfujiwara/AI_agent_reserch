@@ -206,14 +206,14 @@
       </p>
     </section>
 
-    <section id="agents" class="content-section hidden">
+    <section id="agents" class="content-section">
       <h2 class="section-title">主要AIコーディングエージェントの概要</h2>
       <p class="mb-6">現在市場で注目されている主要なAIコーディングエージェントを紹介します。各カードをクリックすると、詳細な情報（主な機能、ユニークな強み、対応IDE、価格モデルなど）が表示されます。</p>
       <div id="agentCardsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       </div>
     </section>
 
-    <section id="comparison" class="content-section hidden">
+    <section id="comparison" class="content-section">
       <h2 class="section-title">AIコーディングエージェント比較分析</h2>
       <p class="mb-4">
         AIコーディングエージェントの選定は、組織のニーズ、開発環境、セキュリティ要件、そして予算に大きく依存します。ここでは、主要なエージェントを多角的に比較し、その差別化要因と選定のポイントを分析します。</p>
@@ -266,7 +266,7 @@
       </div>
     </section>
 
-    <section id="outlook" class="content-section hidden">
+    <section id="outlook" class="content-section">
       <h2 class="section-title">今後の展望と推奨事項</h2>
       <p class="mb-4">AIコーディングエージェント市場は急速に進化しており、そのトレンドを理解することは、将来的な技術戦略を策定する上で不可欠です。</p>
 
@@ -294,7 +294,7 @@
       </div>
     </section>
 
-    <section id="conclusion" class="content-section hidden">
+    <section id="conclusion" class="content-section">
       <h2 class="section-title">結論</h2>
       <p class="mb-4">
         AIコーディングエージェントは、ソフトウェア開発の効率と品質を飛躍的に向上させる可能性を秘めた、不可欠なツールへと進化しています。市場は多様化し、それぞれのニーズに対応する選択肢が豊富に存在します。</p>
@@ -369,19 +369,34 @@
 
             let currentSort = { column: null, direction: 'asc' };
 
-            function showSection(sectionId) {
-                contentSections.forEach(section => {
-                    section.classList.add('hidden');
-                });
-                document.getElementById(sectionId).classList.remove('hidden');
-            }
-
+            // スムーズスクロール機能
             navButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    navButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    showSection(button.dataset.section);
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const section = document.getElementById(button.dataset.section);
+                    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 });
+            });
+
+            // Intersection Observerでactiveタブ切り替え
+            const sectionIds = Array.from(navButtons).map(btn => btn.dataset.section);
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.3
+            };
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navButtons.forEach(btn => btn.classList.remove('active'));
+                        const activeBtn = Array.from(navButtons).find(btn => btn.dataset.section === entry.target.id);
+                        if (activeBtn) activeBtn.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+            sectionIds.forEach(id => {
+                const section = document.getElementById(id);
+                if (section) sectionObserver.observe(section);
             });
 
             function populateAgentCards() {
@@ -601,7 +616,6 @@
             renderTable(comparisonData);
             populateFilters();
             renderAutonomyChart();
-            showSection('intro'); // 初期表示セクション
         });
   </script>
 </body>
