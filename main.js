@@ -1,35 +1,202 @@
 const agentsData = [
-    { name: "GitHub Copilot (Microsoft/OpenAI)", short_desc: "AIペアプログラマーの元祖。主要IDEに統合。", details: "<strong>主な機能:</strong> コード補完、チャット、自動修正、MCP連携<br><strong>対応IDE:</strong> VS Code, Visual Studio, JetBrains<br><strong>対応言語:</strong> 複数言語<br><strong>提供形態:</strong> クラウドホスト型<br><strong>価格モデル:</strong> サブスクリプション (個人/企業)<br><strong>自律性レベル:</strong> 中<br><strong>プライバシー/セキュリティ:</strong> データ共有懸念 (ビジネス版でポリシー制御)<br><strong>ユニークな強み:</strong> GitHub連携、高い提案品質、導入容易性", ideal_for: "日常的な開発効率の向上、定型的なタスクの自動化、新しい言語やフレームワークの学習支援。" },
-    { name: "Amazon Q Developer (AWS)", short_desc: "AWS環境に特化したAIコーディングアシスタント。", details: "<strong>主な機能:</strong> AWS特化コード生成、セキュリティ検出、マルチファイル変更、ドキュメント/レビューエージェント<br><strong>対応IDE:</strong> JetBrains IDEs, VS Code, CLI<br><strong>対応言語:</strong> Python, Java, JavaScript, TypeScript, C#<br><strong>提供形態:</strong> クラウドホスト型<br><strong>価格モデル:</strong> マネージドサービス (利用ベース)<br><strong>自律性レベル:</strong> 中<br><strong>プライバシー/セキュリティ:</strong> エンタープライズグレード、コード非保持設定<br><strong>ユニークな強み:</strong> AWSエコシステムとの深い連携", ideal_for: "AWSクラウドサービスを多用する企業や開発者、クラウドネイティブなアプリケーション開発。" },
-    { name: "Google Gemini Code Assist (Google)", short_desc: "GoogleのGemini LLMを基盤とするAI支援。", details: "<strong>主な機能:</strong> コード補完、チャット、コード生成<br><strong>対応IDE:</strong> Google Cloudツール, IDEプラグイン<br><strong>対応言語:</strong> 複数言語<br><strong>提供形態:</strong> クラウドホスト型<br><strong>価格モデル:</strong> 無料 (個人), エンタープライズ<br><strong>自律性レベル:</strong> 中<br><strong>プライバシー/セキュリティ:</strong> Google Cloud環境のセキュリティ<br><strong>ユニークな強み:</strong> コード引用提供、個人向け無料プラン", ideal_for: "Google Cloudの顧客、GoogleのAI能力を信頼する開発者、コードの出所の透明性を重視するチーム。" },
-    { name: "Tabnine (Tabnine)", short_desc: "プライバシーとパーソナライゼーション重視のAIアシスタント。", details: "<strong>主な機能:</strong> コード補完、関数/テスト生成<br><strong>対応IDE:</strong> 主要IDE全て<br><strong>対応言語:</strong> 30+言語<br><strong>提供形態:</strong> クラウドホスト型, オンプレミス<br><strong>価格モデル:</strong> フリーミアム, サブスクリプション<br><strong>自律性レベル:</strong> 低〜中<br><strong>プライバシー/セキュリティ:</strong> ゼロデータ保持、オンプレミス、カスタムモデル<br><strong>ユニークな強み:</strong> プライバシー重視、カスタマイズ性", ideal_for: "厳格なセキュリティとプライバシー要件を持つ企業、プロプライエタリコードを扱うチーム。" },
-    { name: "Cline (Open-source)", short_desc: "Plan/Actモードを持つオープンソースAIアシスタント。", details: "<strong>主な機能:</strong> Plan/Actモード、ファイル編集、ターミナル実行、ブラウザ自動化<br><strong>対応IDE:</strong> VS Code<br><strong>対応言語:</strong> 複数LLM対応<br><strong>提供形態:</strong> オープンソース (自己ホスティング)<br><strong>価格モデル:</strong> 無料<br><strong>自律性レベル:</strong> 76%<br><strong>プライバシー/セキュリティ:</strong> 自己管理<br><strong>ユニークな強み:</strong> 段階的計画、高い自律性、MCPによる拡張性", ideal_for: "高度な自動化とカスタマイズを求める開発者、多様なLLMを柔軟に利用したいユーザー。" },
-    { name: "Roo Code (RooCodeInc)", short_desc: "高い自律性を持つ自律型コーディングエージェント。", details: "<strong>主な機能:</strong> コード生成/デバッグ/進化、ファイル読み書き、ターミナル実行、ブラウザ操作<br><strong>対応IDE:</strong> VS Code<br><strong>対応言語:</strong> 複数言語<br><strong>提供形態:</strong> オープンソース (自己ホスティング)<br><strong>価格モデル:</strong> 無料<br><strong>自律性レベル:</strong> 89%<br><strong>プライバシー/セキュリティ:</strong> 自己管理<br><strong>ユニークな強み:</strong> 高い自律性、ジュニア開発者ワークフロー模倣、カスタムモード", ideal_for: "反復的なプログラミングタスクの自動化、自律型ソフトウェア開発ワークフローのテスト。" },
-    { name: "Windsurf (Codeium)", short_desc: "軽快な動作が特徴のVS CodeベースAI開発環境。", details: "<strong>主な機能:</strong> コード提案 (Supercomplete)、リアルタイム同期 (Cascade)<br><strong>対応IDE:</strong> VS Code<br><strong>対応言語:</strong> 複数言語<br><strong>提供形態:</strong> クラウドホスト型<br><strong>価格モデル:</strong> フリーミアム (将来Proプラン)<br><strong>自律性レベル:</strong> 中<br><strong>プライバシー/セキュリティ:</strong> - <br><strong>ユニークな強み:</strong> 動作軽快、インライン修正、直感的UI", ideal_for: "軽量で高速なAI支援を求める開発者、初心者から中級者。" },
-    { name: "Codeium (Codeium)", short_desc: "GitHub Copilotの無料代替を目指すAIアシスタント。", details: "<strong>主な機能:</strong> コード補完、複数プラットフォーム対応<br><strong>対応IDE:</strong> 複数IDE<br><strong>対応言語:</strong> 70+言語<br><strong>提供形態:</strong> クラウドホスト型<br><strong>価格モデル:</strong> 完全無料 (個人), 有料プラン<br><strong>自律性レベル:</strong> 中<br><strong>プライバシー/セキュリティ:</strong> - <br><strong>ユニークな強み:</strong> GitHub Copilotの無料代替、幅広い言語サポート", ideal_for: "コスト効率の良いAIコーディング支援を求める個人開発者や小規模チーム。" },
-    { name: "Cursor (Independent/VS Code-based)", short_desc: "プロジェクト全体を理解する対話型AI補完ツール。", details: "<strong>主な機能:</strong> コード補完、Composer、エージェントモード、チャット、バグ検出<br><strong>対応IDE:</strong> VS Codeベース<br><strong>対応言語:</strong> 複数言語<br><strong>提供形態:</strong> クラウドホスト型<br><strong>価格モデル:</strong> フリーミアム, サブスクリプション<br><strong>自律性レベル:</strong> 高<br><strong>プライバシー/セキュリティ:</strong> - <br><strong>ユニークな強み:</strong> プロジェクト全体理解、「思考してから実行する」アプローチ", ideal_for: "高度な制御と精度の高い提案を求める上級者・技術者。" },
-    { name: "Replit Ghostwriter (Replit, Inc.)", short_desc: "ブラウザベースIDE「Replit」内蔵のAIアシスタント。", details: "<strong>主な機能:</strong> リアルタイム補完、エラーチェック、デバッグ支援<br><strong>対応IDE:</strong> ブラウザベースIDE<br><strong>対応言語:</strong> 50+言語<br><strong>提供形態:</strong> クラウドホスト型<br><strong>価格モデル:</strong> フリーミアム, サブスクリプション<br><strong>自律性レベル:</strong> 低〜中<br><strong>プライバシー/セキュリティ:</strong> - <br><strong>ユニークな強み:</strong> 環境構築不要、初心者向け、ブラウザコラボレーション", ideal_for: "初心者開発者、手軽に開発環境を立ち上げたいユーザー。" },
-    { name: "bolt.new (StackBlitz team)", short_desc: "自然言語からWebアプリを生成するブラウザベースビルダー。", details: "<strong>主な機能:</strong> フルスタックWebアプリ生成、自動修正、ブラウザ操作<br><strong>対応IDE:</strong> ブラウザベース<br><strong>対応言語:</strong> React, Vueなど<br><strong>提供形態:</strong> クラウドホスト型<br><strong>価格モデル:</strong> 無料<br><strong>自律性レベル:</strong> 高<br><strong>プライバシー/セキュリティ:</strong> - <br><strong>ユニークな強み:</strong> ノーコードに近い体験、迅速なプロトタイピング、Figma連携", ideal_for: "Webアプリの迅速なプロトタイピング、非開発者やデザイナーによるWebサイト/アプリ構築。" },
-    { name: "v0 (Vercel)", short_desc: "React/Next.jsコンポーネント生成に特化したAIアシスタント。", details: "<strong>主な機能:</strong> React/Next.jsコンポーネント生成、視覚化<br><strong>対応IDE:</strong> ブラウザベース<br><strong>対応言語:</strong> React, Next.js<br><strong>提供形態:</strong> クラウドホスト型<br><strong>価格モデル:</strong> フリーミアム, 有料プラン<br><strong>自律性レベル:</strong> 高<br><strong>プライバシー/セキュリティ:</strong> - <br><strong>ユニークな強み:</strong> React/Next.js特化、デザインからのコード生成", ideal_for: "React/Next.jsエコシステムで開発を行うWeb開発者、UIコンポーネントの迅速な生成。" },
-    { name: "CodeGeeX (Open-source)", short_desc: "オープンソースのAIプログラミングアシスタント。", details: "<strong>主な機能:</strong> コード補完、コメント生成、コード翻訳、チャットボット<br><strong>対応IDE:</strong> VS Code, IntelliJ IDEA, PyCharm<br><strong>対応言語:</strong> Python, Java, C++, JavaScript, Goなど<br><strong>提供形態:</strong> オープンソース (自己ホスティング)<br><strong>価格モデル:</strong> 無料 (オープンソース), 有料プラン<br><strong>自律性レベル:</strong> 中<br><strong>プライバシー/セキュリティ:</strong> 自己ホスティングで完全制御<br><strong>ユニークな強み:</strong> オープンソース、高いカスタマイズ性", ideal_for: "コストを抑えたい個人開発者、フルコントロールとカスタマイズ性を求める開発者。" },
-    { name: "Sourcegraph Cody (Sourcegraph)", short_desc: "大規模プロジェクトのコード検索とリファクタリング支援。", details: "<strong>主な機能:</strong> リポジトリ横断検索、リファクタリング支援<br><strong>対応IDE:</strong> 複数IDE<br><strong>対応言語:</strong> 複数言語<br><strong>提供形態:</strong> クラウドホスト型<br><strong>価格モデル:</strong> フリーミアム, サブスクリプション<br><strong>自律性レベル:</strong> 中<br><strong>プライバシー/セキュリティ:</strong> - <br><strong>ユニークな強み:</strong> 大規模プロジェクト向け、全体像把握", ideal_for: "大規模なモノレポや複数のリポジトリを扱う企業、上級者・技術者。" }
+    {
+        name: "GitHub Copilot (Microsoft/OpenAI)",
+        short_desc: "AIペアプログラマーの元祖。主要IDEに統合。OpenAIのCodex/GPTモデルベース。",
+        ideal_for: "日常的な開発効率向上、定型タスク自動化、新言語/フレームワーク学習支援。",
+        details_html: `
+            <div class="detail-item"><strong>主な機能:</strong> コード補完 (行/ブロック単位)、チャット (Copilot Chat)、エージェントモードによる自動修正、MCP連携。</div>
+            <div class="detail-item"><strong>使用モデル:</strong> OpenAI Codex, GPT-4。</div>
+            <div class="detail-item"><strong>対応IDE:</strong> VS Code, Visual Studio, JetBrains IDEs。</div>
+            <div class="detail-item"><strong>対応言語:</strong> 複数言語対応。</div>
+            <div class="detail-item"><strong>提供形態:</strong> クラウドホスト型。</div>
+            <div class="detail-item"><strong>価格モデル:</strong> サブスクリプション。</div>
+            <div class="detail-item"><strong>詳細料金:</strong> <ul><li>個人: 約$10/月 または $100/年。</li><li>ビジネス: 約$19/ユーザー/月。</li><li>エンタープライズ: 約$39/ユーザー/月。</li><li>学生・教師・OSSメンテナーは無料プランあり。</li></ul></div>
+            <div class="detail-item"><strong>GitHub連携(PR作成):</strong> GitHub Issuesにタスクを割り当て、PRとして成果物を提出可能。Copilot ChatやVS CodeからPR作成指示も可能。</div>
+            <div class="detail-item"><strong>自律性レベル:</strong> 中。</div>
+            <div class="detail-item"><strong>プライバシー/セキュリティ:</strong> ビジネス版でポリシー制御、コード非保持設定オプションあり。</div>
+            <div class="detail-item"><strong>ユニークな強み:</strong> GitHubエコシステムとの深い連携、高い提案品質、導入容易性。</div>
+            <div class="detail-item"><strong>参考URL:</strong>
+                <ul>
+                    <li><a href="https://github.com/features/copilot" target="_blank">GitHub Copilot 公式</a></li>
+                </ul>
+            </div>
+        `
+    },
+    {
+        name: "Amazon Q Developer (AWS)",
+        short_desc: "AWS環境に特化したAIコーディングアシスタント。旧CodeWhisperer。",
+        ideal_for: "AWSクラウドサービスを多用する企業/開発者、クラウドネイティブアプリ開発。",
+        details_html: `
+            <div class="detail-item"><strong>主な機能:</strong> AWS特化コード生成/補完、セキュリティ脆弱性検出、/devエージェントによるマルチファイル変更、/docエージェント、/reviewエージェント。</div>
+            <div class="detail-item"><strong>使用モデル:</strong> Amazon Bedrock上の複数の基盤モデル (例: Amazon Titan, Anthropic Claude, Meta Llamaなど)。</div>
+            <div class="detail-item"><strong>対応IDE:</strong> JetBrains IDEs, VS Code, AWS Cloud9, CLIエージェント。</div>
+            <div class="detail-item"><strong>対応言語:</strong> Python, Java, JavaScript, TypeScript, C#など15+言語。</div>
+            <div class="detail-item"><strong>提供形態:</strong> クラウドホスト型 (AWSサービス)。</div>
+            <div class="detail-item"><strong>価格モデル:</strong> マネージドサービス (利用ベース)。</div>
+            <div class="detail-item"><strong>詳細料金:</strong> <ul><li>無料利用枠あり (制限付き)。</li><li>Proプラン: $19/ユーザー/月。</li><li>機能によっては追加料金が発生する場合あり。</li></ul></div>
+            <div class="detail-item"><strong>GitHub連携(PR作成):</strong> Amazon CodeCatalyst経由でPRサマリー機能あり。直接的なPR作成機能は明記なし。</div>
+            <div class="detail-item"><strong>自律性レベル:</strong> 中。</div>
+            <div class="detail-item"><strong>プライバシー/セキュリティ:</strong> エンタープライズグレード、IAM制御、コード非保持設定オプションあり。</div>
+            <div class="detail-item"><strong>ユニークな強み:</strong> AWSサービスとの深い連携と最適化、AWSベストプラクティス組込。</div>
+            <div class="detail-item"><strong>参考URL:</strong>
+                <ul>
+                    <li><a href="https://aws.amazon.com/q/developer/" target="_blank">Amazon Q Developer 公式</a></li>
+                </ul>
+            </div>
+        `
+    },
+    {
+        name: "Google Gemini Code Assist (Google)",
+        short_desc: "GoogleのGemini LLMを基盤とするAI支援。Duet AIの一部。",
+        ideal_for: "Google Cloud顧客、GoogleのAI能力を信頼する開発者、コード出所の透明性重視チーム。",
+        details_html: `
+            <div class="detail-item"><strong>主な機能:</strong> コード補完、チャット、コード生成。</div>
+            <div class="detail-item"><strong>使用モデル:</strong> Google Gemini LLM (コードに最適化されたバージョン)。</div>
+            <div class="detail-item"><strong>対応IDE:</strong> Google Cloudツール, VS Code, JetBrains IDEs等へのプラグイン。</div>
+            <div class="detail-item"><strong>対応言語:</strong> 複数言語対応。</div>
+            <div class="detail-item"><strong>提供形態:</strong> クラウドホスト型 (Google Cloudサービス)。</div>
+            <div class="detail-item"><strong>価格モデル:</strong> 無料枠あり、エンタープライズ向けプラン。</div>
+            <div class="detail-item"><strong>詳細料金:</strong> <ul><li>個人開発者向け無料プランあり (月額制限付き)。</li><li>Standard版: 約$19/ユーザー/月 (年間契約)。</li><li>Enterprise版: 約$29/ユーザー/月 (年間契約)。</li></ul></div>
+            <div class="detail-item"><strong>GitHub連携(PR作成):</strong> JulesはGitHub連携し、PRとしてレビューできる形でブランチにプッシュ可能。Gemini Code Assist自体の直接PR作成機能は明記なし。</div>
+            <div class="detail-item"><strong>自律性レベル:</strong> 中。</div>
+            <div class="detail-item"><strong>プライバシー/セキュリティ:</strong> Google Cloud環境のセキュリティ基準に準拠。</div>
+            <div class="detail-item"><strong>ユニークな強み:</strong> 提案コードの引用提供機能、個人向け無料プラン、エンタープライズ管理機能。</div>
+            <div class="detail-item"><strong>参考URL:</strong>
+                <ul>
+                    <li><a href="https://cloud.google.com/products/gemini/code-assist" target="_blank">Google Gemini Code Assist 公式</a></li>
+                </ul>
+            </div>
+        `
+    },
+    {
+        name: "Cursor (Anysphere)",
+        short_desc: "VS Codeベースの対話型AI補完ツール。プロジェクト全体を理解。",
+        ideal_for: "高度な制御と精度を求める上級者、プロジェクト全体のコンテキストを深く理解して作業したい開発者。",
+        details_html: `
+            <div class="detail-item"><strong>主な機能:</strong> 高度なコード補完、Composer、エージェントモード、コンテキスト認識チャット、バグ検出/修正。</div>
+            <div class="detail-item"><strong>使用モデル:</strong> GPT-4, GPT-4o, Claude 3 Opus, Claude 3.5 Sonnet など。</div>
+            <div class="detail-item"><strong>対応IDE:</strong> VS Codeベースの独自エディタ。</div>
+            <div class="detail-item"><strong>対応言語:</strong> 複数言語対応。</div>
+            <div class="detail-item"><strong>提供形態:</strong> クラウドホスト型。</div>
+            <div class="detail-item"><strong>価格モデル:</strong> フリーミアム、サブスクリプション。</div>
+            <div class="detail-item"><strong>詳細料金:</strong> <ul><li>無料プランあり (制限付き)。</li><li>Proプラン: $20/月。</li><li>Businessプラン: $40/ユーザー/月。</li></ul></div>
+            <div class="detail-item"><strong>GitHub連携(PR作成):</strong> PRのコード差分識別やAIによるPRレビュー作成支援機能あり。自律的なPR作成機能は明記なし。</div>
+            <div class="detail-item"><strong>自律性レベル:</strong> 高。</div>
+            <div class="detail-item"><strong>プライバシー/セキュリティ:</strong> ローカルモード、エンタープライズ版でのプライバシー設定あり。</div>
+            <div class="detail-item"><strong>ユニークな強み:</strong> プロジェクト全体理解、「思考してから実行する」アプローチ、高精度な提案。</div>
+            <div class="detail-item"><strong>参考URL:</strong>
+                <ul>
+                    <li><a href="https://cursor.sh/" target="_blank">Cursor 公式</a></li>
+                </ul>
+            </div>
+        `
+    },
+    {
+        name: "Devin (Cognition Labs)",
+        short_desc: "自律型AIソフトウェアエンジニア。新機能実装、バグ修正、PR作成をオフロード。",
+        ideal_for: "自律的な開発タスク実行を期待するユーザー、最先端AIエージェント技術に関心のある開発者。",
+        details_html: `
+            <div class="detail-item"><strong>主な機能:</strong> 新機能実装、バグ修正、PR作成を含むタスク全体をオフロード。Devin IDE, Devin Search, Devin Wiki機能など。</div>
+            <div class="detail-item"><strong>使用モデル:</strong> Cognition Labs独自のAIモデル (詳細は非公開)。</div>
+            <div class="detail-item"><strong>対応IDE:</strong> Devin IDE (Devin独自の環境)。</div>
+            <div class="detail-item"><strong>対応言語:</strong> 複数言語対応 (タスクの性質による)。</div>
+            <div class="detail-item"><strong>提供形態:</strong> クラウドベース。</div>
+            <div class="detail-item"><strong>価格モデル:</strong> 従量課金制 (ACUベース)、サブスクリプション。</div>
+            <div class="detail-item"><strong>詳細料金:</strong> <ul><li>Core (従量課金): 最低$20から ($2.25/ACU)。</li><li>Team: $500/月 (250 ACU含む)。</li><li>Enterprise: カスタム価格。</li></ul></div>
+            <div class="detail-item"><strong>GitHub連携(PR作成):</strong> GitHub組織と連携し、PRの作成、PRコメントの読み取り・応答が可能。自律的にPRを作成・管理できる。</div>
+            <div class="detail-item"><strong>自律性レベル:</strong> 非常に高。</div>
+            <div class="detail-item"><strong>プライバシー/セキュリティ:</strong> GitHub連携時のリポジトリアクセス権限管理、GPGキー生成。</div>
+            <div class="detail-item"><strong>ユニークな強み:</strong> 高度な自律性によるソフトウェア開発タスクの実行、エンドツーエンドのコーディングプロセス処理。</div>
+            <div class="detail-item"><strong>参考URL:</strong>
+                <ul>
+                    <li><a href="https://devin.ai/" target="_blank">Devin AI 公式</a></li>
+                </ul>
+            </div>
+        `
+    },
+    {
+        name: "Codex (OpenAI)",
+        short_desc: "OpenAI製のコード生成モデル。GitHub連携でブランチ・PR作成が可能。",
+        ideal_for: "自然言語からのコード生成とGitHubワークフローの自動化を試したい開発者。",
+        details_html: `
+            <div class="detail-item"><strong>主な機能:</strong> 自然言語タスク入力からのコード修正、ブランチ作成、PR作成。AGENTS.mdによる制約/規約注入。</div>
+            <div class="detail-item"><strong>使用モデル:</strong> OpenAI Codexモデル (例: codex-1)。現在はOpenAI APIを通じてより新しいモデル (GPT-3.5-turbo, GPT-4など) が利用可能。</div>
+            <div class="detail-item"><strong>対応IDE:</strong> WebUI、Codex CLI。API経由で各種環境に統合可能。</div>
+            <div class="detail-item"><strong>対応言語:</strong> 複数言語対応。</div>
+            <div class="detail-item"><strong>提供形態:</strong> APIベース (クラウド)。</div>
+            <div class="detail-item"><strong>価格モデル:</strong> API利用料ベース。</div>
+            <div class="detail-item"><strong>詳細料金:</strong> OpenAI APIの利用料金に依存。</div>
+            <div class="detail-item"><strong>GitHub連携(PR作成):</strong> GitHubと連携し、PR作成が可能。Codex CLIはGitHub Actionsを利用してissue処理やPR作成を行う。</div>
+            <div class="detail-item"><strong>自律性レベル:</strong> 中〜高。</div>
+            <div class="detail-item"><strong>プライバシー/セキュリティ:</strong> OpenAI APIの利用規約・プライバシーポリシーに準拠。</div>
+            <div class="detail-item"><strong>ユニークな強み:</strong> 自然言語からの自律的なコード生成とGitHubワークフローへの統合。</div>
+            <div class="detail-item"><strong>参考URL:</strong>
+                <ul>
+                    <li><a href="https://platform.openai.com/docs/models/codex" target="_blank">OpenAI Codex (Legacy)</a></li>
+                </ul>
+            </div>
+        `
+    },
+    {
+        name: "Jules (Google)",
+        short_desc: "Google製のAIエージェント。GitHub連携と実装計画提示が特徴。",
+        ideal_for: "Google Geminiの能力を活用し、実装計画からコード生成までを試したい開発者。",
+        details_html: `
+            <div class="detail-item"><strong>主な機能:</strong> GitHub連携、リポジトリ接続しWebUIから指示。実装計画提示、承認後のコード生成、テスト実行、プレビュー環境立ち上げまで自動化。</div>
+            <div class="detail-item"><strong>使用モデル:</strong> Gemini Pro または Flash。</div>
+            <div class="detail-item"><strong>対応IDE:</strong> WebUI。</div>
+            <div class="detail-item"><strong>対応言語:</strong> 複数言語対応。</div>
+            <div class="detail-item"><strong>提供形態:</strong> クラウドベース。</div>
+            <div class="detail-item"><strong>価格モデル:</strong> ベータ版では無料。</div>
+            <div class="detail-item"><strong>詳細料金:</strong> ベータ版で1日5リクエストの制限あり。</div>
+            <div class="detail-item"><strong>GitHub連携(PR作成):</strong> GitHubリポジトリと連携し、WebUIから指示。変更をブランチにプッシュし、PRとしてレビュー可能。</div>
+            <div class="detail-item"><strong>自律性レベル:</strong> 中〜高。</div>
+            <div class="detail-item"><strong>プライバシー/セキュリティ:</strong> Googleのプライバシーポリシーに準拠。</div>
+            <div class="detail-item"><strong>ユニークな強み:</strong> 実装計画の提示と承認プロセス、Geminiの強力なモデル活用。</div>
+            <div class="detail-item"><strong>参考URL:</strong>
+                <ul>
+                    <li><a href="https://jules.ai/" target="_blank">Jules AI 公式</a></li>
+                </ul>
+            </div>
+        `
+    },
+    {
+        name: "Claude Code (Anthropic)",
+        short_desc: "Anthropic製のAIエージェント。CLIからのコード修正とIDE連携が可能。",
+        ideal_for: "CLIベースでのコード修正や、GitHub Actionsと連携してAIを活用したい開発者。",
+        details_html: `
+            <div class="detail-item"><strong>主な機能:</strong> CLIからのLLM指示によるコード修正、IDE拡張機能、ヘッドレスモードでのCIサーバー/Actionsからの実行。</div>
+            <div class="detail-item"><strong>使用モデル:</strong> Anthropic Claude モデル (例: Claude 3.5 Sonnet, Claude 3 Opusなど)。</div>
+            <div class="detail-item"><strong>対応IDE:</strong> IDE拡張機能あり。</div>
+            <div class="detail-item"><strong>対応言語:</strong> 複数言語対応。</div>
+            <div class="detail-item"><strong>提供形態:</strong> クラウドベース (API)。</div>
+            <div class="detail-item"><strong>価格モデル:</strong> フリーミアム、サブスクリプション。</div>
+            <div class="detail-item"><strong>詳細料金:</strong> <ul><li>無料プランあり (制限付き)。</li><li>Pro: $20/月。</li><li>Team: $30/ユーザー/月 (最小5ユーザー)。</li></ul></div>
+            <div class="detail-item"><strong>GitHub連携(PR作成):</strong> GitHub Actions利用はAPIキーが必要。Claude Code ActionはGitHubアプリとして追加可能。</div>
+            <div class="detail-item"><strong>自律性レベル:</strong> 中。</div>
+            <div class="detail-item"><strong>プライバシー/セキュリティ:</strong> Anthropicの利用規約・プライバシーポリシーに準拠。</div>
+            <div class="detail-item"><strong>ユニークな強み:</strong> CLIからの強力なコード修正能力、洗練されたUI、GitHub Actionsとの連携。</div>
+            <div class="detail-item"><strong>参考URL:</strong>
+                <ul>
+                    <li><a href="https://www.anthropic.com/claude" target="_blank">Anthropic Claude 公式</a></li>
+                </ul>
+            </div>
+        `
+    }
 ];
 
 const comparisonData = [
-    { name: "GitHub Copilot (Microsoft/OpenAI)", ide: "VS Code, Visual Studio, JetBrains", pricing: "サブスクリプション (個人/企業)", autonomy: "中", privacy: "データ共有懸念 (ビジネス版でポリシー制御)", strength: "GitHub連携、高い提案品質、導入容易性" },
-    { name: "Amazon Q Developer (AWS)", ide: "JetBrains IDEs, VS Code, CLI", pricing: "マネージドサービス (利用ベース)", autonomy: "中", privacy: "エンタープライズグレード、コード非保持設定", strength: "AWSエコシステムとの深い連携" },
-    { name: "Google Gemini Code Assist (Google)", ide: "Google Cloudツール, IDEプラグイン", pricing: "無料 (個人), エンタープライズ", autonomy: "中", privacy: "Google Cloud環境のセキュリティ", strength: "コード引用提供、個人向け無料プラン" },
-    { name: "Tabnine (Tabnine)", ide: "主要IDE全て", pricing: "フリーミアム, サブスクリプション", autonomy: "低〜中", privacy: "ゼロデータ保持、オンプレミス、カスタムモデル", strength: "プライバシー重視、カスタマイズ性" },
-    { name: "Cline (Open-source)", ide: "VS Code", pricing: "無料", autonomy: "76%", privacy: "自己管理", strength: "段階的計画、高い自律性、MCPによる拡張性" },
-    { name: "Roo Code (RooCodeInc)", ide: "VS Code", pricing: "無料", autonomy: "89%", privacy: "自己管理", strength: "高い自律性、ジュニア開発者ワークフロー模倣" },
-    { name: "Windsurf (Codeium)", ide: "VS Code", pricing: "フリーミアム (将来Proプラン)", autonomy: "中", privacy: "-", strength: "動作軽快、インライン修正、直感的UI" },
-    { name: "Codeium (Codeium)", ide: "複数IDE", pricing: "完全無料 (個人), 有料プラン", autonomy: "中", privacy: "-", strength: "GitHub Copilotの無料代替" },
-    { name: "Cursor (Independent/VS Code-based)", ide: "VS Codeベース", pricing: "フリーミアム, サブスクリプション", autonomy: "高", privacy: "-", strength: "プロジェクト全体理解" },
-    { name: "Replit Ghostwriter (Replit, Inc.)", ide: "ブラウザベースIDE", pricing: "フリーミアム, サブスクリプション", autonomy: "低〜中", privacy: "-", strength: "環境構築不要、初心者向け" },
-    { name: "bolt.new (StackBlitz team)", ide: "ブラウザベース", pricing: "無料", autonomy: "高", privacy: "-", strength: "ノーコードに近い体験、迅速なプロトタイピング" },
-    { name: "v0 (Vercel)", ide: "ブラウザベース", pricing: "フリーミアム, 有料プラン", autonomy: "高", privacy: "-", strength: "React/Next.js特化" },
-    { name: "CodeGeeX (Open-source)", ide: "VS Code, IntelliJ IDEA, PyCharm", pricing: "無料 (オープンソース), 有料プラン", autonomy: "中", privacy: "自己ホスティングで完全制御", strength: "オープンソース、高いカスタマイズ性" },
-    { name: "Sourcegraph Cody (Sourcegraph)", ide: "複数IDE", pricing: "フリーミアム, サブスクリプション", autonomy: "中", privacy: "-", strength: "大規模プロジェクト向け" }
+    { name: "GitHub Copilot (Microsoft/OpenAI)", ide: "VS Code, Visual Studio, JetBrains", pricing: "サブスクリプション (個人: 約$10/月, ビジネス: 約$19/ユーザー/月, エンタープライズ: 約$39/ユーザー/月)", autonomy: "中", github_integration: "PR作成・管理機能あり", strength: "GitHub連携、高い提案品質" },
+    { name: "Amazon Q Developer (AWS)", ide: "JetBrains, VS Code, CLI", pricing: "利用ベース (Pro: $19/ユーザー/月)", autonomy: "中", github_integration: "PRサマリーあり (CodeCatalyst経由)", strength: "AWSエコシステム連携" },
+    { name: "Google Gemini Code Assist (Google)", ide: "Google Cloudツール, IDEプラグイン", pricing: "無料枠あり, Standard:約$19/月, Enterprise:約$29/月", autonomy: "中", github_integration: "Jules連携でPR作成可", strength: "コード引用提供、個人無料プラン" },
+    { name: "Cursor (Anysphere)", ide: "VS Codeベース独自エディタ", pricing: "フリーミアム (Pro: $20/月)", autonomy: "高", github_integration: "PRレビュー支援あり", strength: "プロジェクト全体理解" },
+    { name: "Devin (Cognition Labs)", ide: "Devin IDE", pricing: "従量課金 (ACUベース), Team: $500/月", autonomy: "非常に高", github_integration: "PR作成・管理機能あり", strength: "高度な自律開発" },
+    { name: "Codex (OpenAI)", ide: "WebUI, Codex CLI", pricing: "OpenAI API利用料", autonomy: "中〜高", github_integration: "PR作成機能あり", strength: "自然言語からのGitHubワークフロー統合" },
+    { name: "Jules (Google)", ide: "WebUI", pricing: "無料 (ベータ版)", autonomy: "中〜高", github_integration: "PRとしてレビュー可能な形でブランチプッシュ", strength: "実装計画提示、Gemini活用" },
+    { name: "Claude Code (Anthropic)", ide: "IDE拡張あり, CLI", pricing: "フリーミアム (Pro: $20/月)", autonomy: "中", github_integration: "GitHub Actions連携", strength: "CLIからのコード修正" },
+    { name: "Tabnine (Tabnine)", ide: "主要IDE全て", pricing: "フリーミアム (Dev: $9/月)", autonomy: "低〜中", github_integration: "コードレビューエージェント (PRレビュー支援)", strength: "プライバシー重視, カスタムモデル" },
+    { name: "Cline (Open-source)", ide: "VS Code", pricing: "無料 (LLM API利用料別途)", autonomy: "76%", github_integration: "PRレビュー支援、Issue/PR提出可", strength: "Plan/Actモード, MCP拡張性" },
+    { name: "Roo Code (RooCodeInc)", ide: "VS Code", pricing: "無料 (LLM API利用料別途)", autonomy: "89%", github_integration: "関連操作可、直接PR作成は不明瞭", strength: "高自律性, ジュニア開発者模倣" }
 ];
 
 const differentiationFactors = [
@@ -37,7 +204,9 @@ const differentiationFactors = [
     { title: "プライバシーとセキュリティ (Privacy & Security)", content: "コードデータがどのように扱われるかは、特に企業にとって最重要視される要因です。Tabnineはゼロデータ保持ポリシーとオンプレミス運用で、CodeGeeXは自己ホスティングでデータ管理の完全なコントロールを提供します。GitHub Copilotビジネス版やAmazon Qもエンタープライズ向けのセキュリティ機能を強化しています。" },
     { title: "クラウド連携とエコシステム (Cloud Integration & Ecosystem)", content: "特定のクラウドプロバイダーとの統合の深さは、そのクラウドを主要インフラとする企業にとって大きなメリットです。Amazon Q DeveloperはAWSに、Google Gemini Code AssistはGoogle Cloudに深く統合され、それぞれのサービス利用者に特化した機能を提供します。" },
     { title: "カスタマイズ性と拡張性 (Customization & Extensibility)", content: "特定のコードベースや開発プロセスに合わせて調整可能かは、複雑な要件を持つ組織にとって重要です。Tabnineはカスタムモデル訓練が可能。ClineやRoo CodeはMCPを通じて外部ツール連携やカスタムツール追加が可能です。CodeGeeXもオープンソースであるため高いカスタマイズ性を持ちます。" },
-    { title: "学習曲線と使いやすさ (Learning Curve & Usability)", content: "ツールの導入の容易さ、直感的なUI、初心者への配慮は普及の鍵です。Replit Ghostwriterやbolt.newは環境構築不要で直感的に利用でき、コーディング経験のない初心者でもアクセスしやすい設計です。Windsurfも学習コストが低いと評価されています。" }
+    { title: "学習曲線と使いやすさ (Learning Curve & Usability)", content: "ツールの導入の容易さ、直感的なUI、初心者への配慮は普及の鍵です。Replit Ghostwriterやbolt.newは環境構築不要で直感的に利用でき、コーディング経験のない初心者でもアクセスしやすい設計です。Windsurfも学習コストが低いと評価されています。" },
+    { title: "価格体系 (Pricing Model)", content: "無料プランの有無、個人向け・企業向けティア、利用量ベース課金など、価格体系は導入の大きな判断材料です。オープンソースのツールは初期費用を抑えられますが、運用コストやサポート体制も考慮に入れる必要があります。サブスクリプションモデルが一般的ですが、機能制限のある無料プランを提供するサービスも増えています。"},
+    { title: "GitHub連携 (GitHub Integration)", content: "リポジトリの読み書き、ブランチ操作、そしてプルリクエストの自動作成・提案といったGitHubとの連携の深さは、開発ワークフローの自動化レベルを左右します。多くのツールがコードの読み取りや基本的な編集機能を提供しますが、PR作成まで自律的に行うエージェントはまだ限定的です。Devinのような次世代エージェントにはこの能力が期待されていますが、既存ツールの多くは開発者の指示やレビューを介した操作が中心です。"}
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -84,13 +253,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function populateAgentCards() {
+        agentCardsContainer.innerHTML = '';
         agentsData.forEach(agent => {
             const card = document.createElement('div');
-            card.className = 'card p-6 cursor-pointer';
+            card.className = 'card cursor-pointer overflow-hidden';
             card.innerHTML = `
-                <h3 class="text-xl font-semibold text-sky-600 mb-2">${agent.name}</h3>
-                <p class="text-sm text-slate-600 mb-3">${agent.short_desc}</p>
-                <p class="text-xs text-slate-500">理想的なユーザー: ${agent.ideal_for}</p>
+                <div class="card-content">
+                    <h3 class="text-xl font-semibold text-sky-700 mb-2">${agent.name}</h3>
+                    <p class="text-sm text-slate-600 mb-3 h-20 overflow-y-auto">${agent.short_desc}</p>
+                    <p class="text-xs text-slate-500"><strong>対象:</strong> ${agent.ideal_for}</p>
+                </div>
+                <div class="card-footer">
+                    <button class="text-sm bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-4 rounded-md transition duration-150 ease-in-out">詳細を見る</button>
+                </div>
             `;
             card.addEventListener('click', () => openModal(agent));
             agentCardsContainer.appendChild(card);
@@ -99,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.openModal = (agent) => {
         modalAgentName.textContent = agent.name;
-        modalAgentDetails.innerHTML = agent.details + `<br><p class="mt-3"><strong>理想的なユースケース:</strong> ${agent.ideal_for}</p>`;
+        modalAgentDetails.innerHTML = agent.details_html;
         modal.style.display = 'block';
     }
 
@@ -151,7 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
             row.insertCell().textContent = item.ide;
             row.insertCell().textContent = item.pricing;
             row.insertCell().textContent = item.autonomy;
-            row.insertCell().textContent = item.privacy;
+            row.insertCell().textContent = item.github_integration;
             row.insertCell().textContent = item.strength;
         });
     }
