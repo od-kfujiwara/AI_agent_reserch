@@ -167,20 +167,19 @@ main {
   background: transparent;
   border: none;
   transition: background 0.2s, color 0.2s;
+  color: #0369a1;
+  outline: none;
+  box-shadow: none;
+  display: inline-block;
 }
-
 .nav-button.active {
   background-color: #0ea5e9;
   color: #fff;
   box-shadow: 0 2px 8px 0 rgba(14,165,233,0.08);
 }
-
-.nav-button:not(.active) {
-  color: #0369a1;
-}
-
 .nav-button:not(.active):hover {
   background-color: #e0f2fe;
+  color: #0369a1;
 }
 
 .filter-container select,
@@ -190,6 +189,64 @@ main {
   border: 1px solid #cbd5e1;
   margin-right: 0.75rem;
   font-size: 1rem;
+}
+
+#comparisonTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.03);
+}
+#comparisonTable th, #comparisonTable td {
+  padding: 1rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+#comparisonTable th {
+  background-color: #f8fafc;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#comparisonTable th:hover {
+  background-color: #e0f2fe;
+}
+#comparisonTable tr:last-child td {
+  border-bottom: none;
+}
+
+#filterContainer select,
+#filterContainer input {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #cbd5e1;
+  margin-right: 0.75rem;
+  font-size: 1rem;
+  background: #fff;
+}
+#resetFilters {
+  margin-left: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .content-section {
+    padding: 1.25rem 0.5rem;
+  }
+  .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  .nav-button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.95rem;
+    margin: 0 0.25rem;
+  }
+  #comparisonTable th, #comparisonTable td {
+    padding: 0.5rem 0.3rem;
+    font-size: 0.95rem;
+  }
 }
 
 .table th,
