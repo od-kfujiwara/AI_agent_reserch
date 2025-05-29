@@ -235,6 +235,10 @@
       border: 1px solid #cbd5e1;
       margin-right: 0.5rem;
     }
+
+    .content-section {
+      margin-bottom: 2rem;
+    }
   </style>
 </head>
 
@@ -262,7 +266,7 @@
       </p>
     </section>
 
-    <section id="agents" class="content-section hidden">
+    <section id="agents" class="content-section">
       <h2 class="section-title">主要AIエージェントの概要</h2>
       <p class="mb-6">
         現在市場で注目されている主要なAIエージェントを紹介します。各カードをクリックすると、詳細な情報（主な機能、ユニークな強み、対応IDE、価格モデル、GitHub連携など）が表示されます。本リスト及び詳細は、提供されたレポートおよび参照URLに基づきます。
@@ -271,14 +275,15 @@
       </div>
     </section>
 
-    <section id="comparison" class="content-section hidden">
+    <section id="comparison" class="content-section">
       <h2 class="section-title">AIエージェント比較分析</h2>
       <p class="mb-4">AIエージェントの選定は、組織のニーズ、開発環境、セキュリティ要件、そして予算に大きく依存します。ここでは、主要なエージェントを多角的に比較し、その差別化要因と選定のポイントを分析します。</p>
 
       <div class="my-6 p-6 bg-white rounded-xl shadow-xl">
         <h3 class="text-xl font-semibold text-sky-600 mb-3">主要機能・特性比較表</h3>
         <p class="mb-4 text-sm text-slate-600">
-          以下の表は、主要なAIエージェントの特性を一覧で比較できます。列名をクリックしてソートしたり、フィルターを使用して特定の条件に合うエージェントを絞り込めます。</p>
+          以下の表は、主要なAIエージェントの特性を一覧で比較できます。列名をクリックしてソートしたり、フィルターを使用して特定の条件に合うエージェントを絞り込めます。
+        </p>
         <div id="filterContainer" class="mb-4 flex flex-wrap items-center gap-2">
           <input type="text" id="nameFilter" placeholder="エージェント名で検索..."
             class="filter-input px-3 py-2 border border-slate-300 rounded-md focus:ring-sky-500 focus:border-sky-500">
@@ -330,6 +335,27 @@
   </div>
 
   <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const navButtons = document.querySelectorAll('.nav-button');
+
+      navButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Remove active class from all buttons
+          navButtons.forEach(btn => btn.classList.remove('active'));
+
+          // Add active class to the clicked button
+          button.classList.add('active');
+
+          // Scroll to the corresponding section
+          const sectionId = button.getAttribute('data-section');
+          const section = document.getElementById(sectionId);
+          if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    });
+
     const agentsData = [
       {
         name: "GitHub Copilot (Microsoft/OpenAI)",
@@ -597,7 +623,7 @@
 
       function showSection(sectionId) {
         contentSections.forEach(section => {
-          section.classList.add('hidden');
+          section.classList.remove('hidden');
         });
         const currentSection = document.getElementById(sectionId);
         if (currentSection) {
