@@ -47,3 +47,5 @@ CDNライブラリ（TailwindCSS、Chart.js）以外に依存関係のない静�
 ```
 <!-- I want to review in Japanese. -->
 ```
+
+注意：エスケープ処理を避けるため、バックスラッシュは含めず `<!--` の形で記述すること。
