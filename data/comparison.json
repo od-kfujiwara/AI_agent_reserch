@@ -1,0 +1,99 @@
+[
+  {
+    "name": "GitHub Copilot (Microsoft/OpenAI)",
+    "ide": "VS Code, Visual Studio, JetBrains",
+    "pricing": "サブスクリプション (個人: 約$10/月, ビジネス: 約$19/ユーザー/月, エンタープライズ: 約$39/ユーザー/月)",
+    "autonomy": "中",
+    "github_integration": "PR作成・管理機能あり",
+    "strength": "GitHub連携、高い提案品質"
+  },
+  {
+    "name": "Amazon Q Developer (AWS)",
+    "ide": "JetBrains, VS Code, CLI",
+    "pricing": "利用ベース (Pro: $19/ユーザー/月)",
+    "autonomy": "中",
+    "github_integration": "PRサマリーあり (CodeCatalyst経由)",
+    "strength": "AWSエコシステム連携"
+  },
+  {
+    "name": "Google Gemini Code Assist (Google)",
+    "ide": "Google Cloudツール, IDEプラグイン",
+    "pricing": "フリーミアム（Standard:約$19/月, Enterprise:約$29/月）",
+    "autonomy": "中",
+    "github_integration": "Jules連携でPR作成可",
+    "strength": "コード引用提供、個人無料プラン"
+  },
+  {
+    "name": "Cursor (Anysphere)",
+    "ide": "VS Codeベース独自エディタ",
+    "pricing": "フリーミアム (Pro: $20/月)",
+    "autonomy": "高",
+    "github_integration": "PRレビュー支援あり",
+    "strength": "プロジェクト全体理解"
+  },
+  {
+    "name": "Devin (Cognition Labs)",
+    "ide": "Devin IDE",
+    "pricing": "従量課金 (ACUベース), Team: $500/月",
+    "autonomy": "非常に高",
+    "github_integration": "PR作成・管理機能あり",
+    "strength": "高度な自律開発"
+  },
+  {
+    "name": "Codex (OpenAI)",
+    "ide": "WebUI, Codex CLI",
+    "pricing": "OpenAI API利用料",
+    "autonomy": "中〜高",
+    "github_integration": "PR作成機能あり",
+    "strength": "自然言語からのGitHubワークフロー統合"
+  },
+  {
+    "name": "Jules (Google)",
+    "ide": "WebUI",
+    "pricing": "無料 (ベータ版)",
+    "autonomy": "中〜高",
+    "github_integration": "PRとしてレビュー可能な形でブランチプッシュ",
+    "strength": "実装計画提示、Gemini活用"
+  },
+  {
+    "name": "Claude Code (Anthropic)",
+    "ide": "IDE拡張あり, CLI",
+    "pricing": "フリーミアム (Pro: $20/月)",
+    "autonomy": "中",
+    "github_integration": "GitHub Actions連携",
+    "strength": "CLIからのコード修正"
+  },
+  {
+    "name": "Tabnine (Tabnine)",
+    "ide": "主要IDE全て",
+    "pricing": "フリーミアム (Dev: $9/月)",
+    "autonomy": "低〜中",
+    "github_integration": "コードレビューエージェント (PRレビュー支援)",
+    "strength": "プライバシー重視, カスタムモデル"
+  },
+  {
+    "name": "Cline (Open-source)",
+    "ide": "VS Code",
+    "pricing": "無料 (LLM API利用料別途)",
+    "autonomy": "76%",
+    "github_integration": "PRレビュー支援、Issue/PR提出可",
+    "strength": "Plan/Actモード, MCP拡張性"
+  },
+  {
+    "name": "Roo Code (RooCodeInc)",
+    "ide": "VS Code",
+    "pricing": "無料 (LLM API利用料別途)",
+    "autonomy": "89%",
+    "github_integration": "関連操作可、直接PR作成は不明瞭",
+    "strength": "高自律性, ジュニア開発者模倣"
+  },
+  {
+    "name": "Windsurf (Codeium)",
+    "generative_ai_model": "情報なし (Codeium独自モデル)",
+    "ide": "VS Code",
+    "pricing": "フリーミアム (将来Proプラン)",
+    "autonomy": "中",
+    "github_integration": "リアルタイムワークスペース同期、複数ファイル修正可",
+    "strength": "動作軽快、直感的なUI"
+  }
+]
