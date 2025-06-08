@@ -58,7 +58,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     button.addEventListener('click', () => {
       navButtons.forEach(btn => btn.classList.remove('active'));
       button.classList.add('active');
-      showSection(button.dataset.section);
+      // スクロール対象のセクションIDを取得
+      const sectionId = button.dataset.section;
+      const targetSection = document.getElementById(sectionId);
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     });
   });
 
