@@ -4,108 +4,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AIエージェント インタラクティブレポート</title>
+  <title>新しいページ</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="styles.css">
-  <!-- Visualization & Content Choices:
-        - Report Info: AI agents, features, pricing, GitHub integration, AI models. Goal: Detailed understanding & comparison. Viz/Presentation: Cards for agents, clickable for modal. Modal enhanced with 'Models Used' and 'Reference URLs'. Interaction: Click to expand. Justification: Easy scanning, then deep dive into structured, sourced information. Library/Method: HTML/Tailwind, JS.
-        - Report Info: Comparative table data. Goal: Easy cross-agent comparison. Viz/Presentation: Interactive HTML table. Interaction: Sort/filter. Justification: Facilitates direct comparison. Library/Method: HTML/Tailwind, JS.
-        - Report Info: Autonomy levels. Goal: Visual comparison. Viz/Presentation: Bar chart. Interaction: Tooltips. Justification: Visualizes quantitative differences. Library/Method: Chart.js.
-        - Report Info: Differentiating factors. Goal: In-depth understanding of key concepts. Viz/Presentation: Accordions. Interaction: Click to expand/collapse. Justification: Organizes dense info. Library/Method: HTML/Tailwind, JS.
-        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 </head>
 
 <body class="bg-stone-100 text-slate-800 antialiased">
-
-  <header class="bg-white shadow-lg sticky top-0 z-40">
-    <div class="container mx-auto px-4 py-3 flex flex-col sm:flex-row justify-between items-center">
-      <h1 class="text-3xl font-bold text-sky-700">AIエージェント インタラクティブレポート</h1>
-      <nav id="mainNav" class="mt-2 sm:mt-0 flex flex-wrap justify-center">
-        <button class="nav-button active" data-section="intro">はじめに</button>
-        <button class="nav-button" data-section="agents">主要AIエージェント</button>
-        <button class="nav-button" data-section="comparison">比較分析</button>
-      </nav>
-    </div>
-  </header>
-
-  <main class="container mx-auto px-4 py-8">
-    <section id="intro" class="content-section">
-      <h2 class="section-title">はじめに</h2>
-      <p class="mb-4 text-lg">
-        AIエージェントは、ソフトウェア開発の風景を根本から変革しつつある革新的なツール群です。これらのエージェントは、大規模言語モデル（LLM）の能力を活用し、コードの生成、補完、デバッグ、テスト、リファクタリング、さらにはプロジェクト全体の管理といった多岐にわたる開発タスクを自動化・支援します。開発者は反復的な作業から解放され、より創造的で戦略的な問題解決に集中できるようになります。
-      </p>
-    </section>
-
-    <section id="agents" class="content-section">
-      <h2 class="section-title">主要AIエージェントの概要</h2>
-      <p class="mb-6">
-        現在市場で注目されている主要なAIエージェントを紹介します。各カードをクリックすると、詳細な情報（主な機能、ユニークな強み、対応IDE、価格モデル、GitHub連携など）が表示されます。
-      </p>
-      <div id="agentCardsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      </div>
-    </section>
-
-    <section id="comparison" class="content-section">
-      <h2 class="section-title">AIエージェント比較分析</h2>
-      <p class="mb-4">AIエージェントの選定は、組織のニーズ、開発環境、セキュリティ要件、そして予算に大きく依存します。ここでは、主要なエージェントを多角的に比較し、その差別化要因と選定のポイントを分析します。</p>
-
-      <div class="my-6 p-6 bg-white rounded-xl shadow-xl">
-        <h3 class="text-xl font-semibold text-sky-600 mb-3">主要機能・特性比較表</h3>
-        <p class="mb-4 text-sm text-slate-600">
-          以下の表は、主要なAIエージェントの特性を一覧で比較できます。列名をクリックしてソートしたり、フィルターを使用して特定の条件に合うエージェントを絞り込めます。
-        </p>
-        <div id="filterContainer" class="mb-4 flex flex-wrap items-center gap-2">
-          <input type="text" id="nameFilter" placeholder="エージェント名で検索..."
-            class="filter-input px-3 py-2 border border-slate-300 rounded-md focus:ring-sky-500 focus:border-sky-500">
-          <select id="ideFilter"
-            class="filter-select px-3 py-2 border border-slate-300 rounded-md focus:ring-sky-500 focus:border-sky-500">
-            <option value="">対応IDE (全て)</option>
-          </select>
-          <select id="pricingFilter"
-            class="filter-select px-3 py-2 border border-slate-300 rounded-md focus:ring-sky-500 focus:border-sky-500">
-            <option value="">価格モデル (全て)</option>
-          </select>
-          <button id="resetFilters"
-            class="bg-slate-500 hover:bg-slate-600 text-white font-semibold py-2 px-4 rounded-md transition duration-150 ease-in-out">フィルター解除</button>
-        </div>
-        <div class="overflow-x-auto">
-          <table id="comparisonTable" class="min-w-full bg-white">
-            <thead>
-              <tr>
-                <th data-sort="name">AIエージェント名（提供企業）</th>
-                <th data-sort="ide">対応IDE</th>
-                <th data-sort="pricing">価格モデル（詳細）</th>
-                <th data-sort="autonomy">自律性レベル</th>
-                <th data-sort="github_integration">GitHub連携（PR作成）</th>
-                <th data-sort="strength">ユニークな強み</th>
-              </tr>
-            </thead>
-            <tbody id="comparisonTableBody"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="my-6">
-        <h3 class="text-xl font-semibold text-sky-600 mb-3">差別化要因と選定のポイント</h3>
-        <p class="mb-4 text-sm text-slate-600">AIエージェントを選定する上で重要な差別化要因です。各項目をクリックして詳細を確認してください。</p>
-        <div id="differentiationFactorsContainer">
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <div id="agentModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 id="modalAgentName" class="text-2xl font-bold text-sky-700"></h3>
-        <span class="modal-close" onclick="closeModal()">&times;</span>
-      </div>
-      <div id="modalAgentDetails" class="text-slate-700 detail-grid"></div>
+  <div class="min-h-screen flex items-center justify-center">
+    <div class="text-center">
+      <h1 class="text-4xl font-bold text-sky-700 mb-4">新しいページ</h1>
+      <p class="text-lg text-slate-600">まっさらな状態から始めます</p>
     </div>
   </div>
 
-  <script src="scripts.js"></script>
+  <footer class="bg-white shadow-lg mt-16">
+    <div class="container mx-auto px-4 py-8">
+      <section>
+        <h2 class="text-2xl font-bold text-sky-700 mb-6">更新履歴</h2>
+        <div class="space-y-4">
+          <div class="bg-slate-50 p-6 rounded-lg border-l-4 border-sky-500">
+            <h3 class="text-lg font-semibold text-slate-800 mb-2">Version 1.0 - AIエージェント インタラクティブレポート</h3>
+            <p class="text-sm text-slate-600 mb-3">初版リリース - 主要AIエージェントの包括的な比較分析</p>
+            <div class="flex items-center space-x-4">
+              <a href="version1.html"
+                 class="inline-flex items-center px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white font-medium rounded-md transition duration-150 ease-in-out">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                </svg>
+                Version 1.0を開く
+              </a>
+              <span class="text-xs text-slate-500">AIエージェントの詳細比較、インタラクティブテーブル、モーダル機能を含む</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </footer>
 </body>
 
 </html>
