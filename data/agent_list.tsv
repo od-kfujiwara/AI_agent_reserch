@@ -1,0 +1,9 @@
+エージェント名	提供会社	使用可能モデル	提供形式	備考
+GitHub Copilot	Microsoft	GPT‑4.1/GPT-4o/Claude 3.7(Business)　複数の先進モデルを選択可能(Enterprise)	VS Code拡張機能/Github上	VSCodeやCopilotのまま使える
+Cursor	Anysphere	複数の先進モデルを選択可能	独立IDE	AIエージェントに特化、MCP導入がしやすい、アプデが早い
+Devin	Cognition Labs	独自モデル（非公開）	Webアプリ（Sandbox実行）	高価、課金がトークンベースなのでとても使いづらい
+Claude Code	Anthropic	Claude Opus 4/Sonnet 4	VS Code拡張機能/CLI	圧倒的コーディング力、自律性が高い
+OpenAI Codex	OpenAI	Codex-1（o3ベース）	Webアプリ（ChatGPT上）	複数のタスクを同時に回せる、ブラウザからしか使えないのが環境構築困難
+Jules(beta)	Google	Gemini 2.5	Webアプリ	ベータ版
+Gemini Code Assist	Google	Gemini 2.5	VS Code拡張機能	VSCode拡張機能、CopilotのPro+で包括
+Windsurf	Windsurf Inc.	SWE-1/複数の先進モデルを選択可能	独立IDE	OpenAIに買収、先行き不透明だが、OpenAI資金が強み

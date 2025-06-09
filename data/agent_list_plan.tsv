@@ -1,0 +1,27 @@
+AIエージェント名	プラン	価格	特徴
+Copilot	Free	$0	1か月あたり50件のエージェントモードまたはチャットリクエスト 1か月あたり2,000件のコード補完 Claude 3.5 Sonnet、GPT-4.1 などへのアクセス
+Copilot	GitHub Pro	$10/$100(年額)	GPT-4.1を使用した無制限のエージェントモードとチャット 無制限のコード補完 コードレビュー、Claude 3.7 Sonnet、o1 などへのアクセス プレミアムリクエスト可能件数がGitHub Copilot Freeの6倍
+Copilot	GitHub Pro+	$39/$390(年額)	GPT-4.5を含めたすべてのモデルへのアクセス プレミアムリクエスト可能件数がGitHub Copilot Freeの30倍 コーディング エージェント (プレビュー)
+Copilot	Business	$19	GPT-4.1を使用した無制限のエージェントモードとチャット 無制限のコード補完 コードレビュー、Claude 3.5/3.7 Sonnet、o1 などへのアクセス プレミアムリクエスト件数は300件/User ユーザー管理と使用状況メトリクス 知財免責とデータ プライバシー
+Copilot	Enterprise	$39	GPT-4.5を含めたすべてのモデルへのアクセス プレミアム リクエストの件数がBusinessプランの3.33倍 プレミアムリクエスト件数は1000件/User コーディングエージェント(プレビュー)
+Cursor	Hobby	$0	2000回の補完50回の低速プレミアムリクエスト
+Cursor	Pro	$20/$16(年額)	無制限の補完 月に500回の高速プレミアムリクエスト 無制限の低速プレミアムリクエスト
+Cursor	Business	$40/$32(年額)	Pro +α組織全体でのプライバシーモード適用 利用状況を確認できる管理者向けダッシュボード SOC 2認定、Privacy Mode（データゼロ保存）
+Devin	Core	$20(初期費用)	初期9ACU(以降従量課金のみ) 同時最大10個のセッションを並行して実行可能 ユーザー数の制限はなくチームで利用可能 エージェントIDE、Interactive Planning、Devin Search、Devin Wikiなどの最新機能が利用可能
+Devin	Team	$500	初期250ACU/月(超過で従量課金) 同時実行セッション数は無制限 DevinのAPIアクセス権が付与され、外部ツール連携やカスタマイズが容易
+Devin	Enterprise	相談	エンタープライズ向けカスタム機能とサポート
+Claude Code	Pro	$20	Sonnetへのアクセス 5時間ごとにClaudeで約45メッセージを送信、またはClaude Codeで約10-40プロンプトを送信
+Claude Code	Max 5×	$100	Pro比5倍の利用枠 Opusへのアクセス 5時間ごとにClaudeで約225メッセージを送信、またはClaude Codeで約50-200プロンプトを送信
+Claude Code	Max 20×	$200	Pro比20倍の利用枠 Opusへのアクセス 5時間ごとにClaudeで約900メッセージを送信、またはClaude Codeで約200-800プロンプトを送信
+Claude Code	Team	$30/$25(年額)	最低5名から利用可能 チーム管理機能とコラボレーション機能
+Codex	Pro	$200	プロフェッショナル向けプラン
+Codex	Team	$30/$25(年額)	チーム向けプラン
+Codex	Enterprise	相談	エンタープライズ向けカスタムプラン
+Jules	Free	$0	ベータ版のため無料で利用可能
+Gemini Code Assist	Free	$0	基本的なコード補完機能
+Gemini Code Assist	Standard	$22.8/$19(年額)	標準的なコード補完とチャット機能
+Gemini Code Assist	Enterprise	$54/$45(年額)	エンタープライズ向け高度な機能とサポート
+Windsurf	Free	$0	毎月25クレジット（GPT‑4.1換算 約100プロンプト） 1日1回アプリデプロイ可能
+Windsurf	Pro	$15	毎月500クレジット（GPT‑4.1換算 約2000プロンプト） SWE‑1モデル利用、5回/日デプロイ機能
+Windsurf	Teams	$30	毎月500クレジット/user Pro機能＋チーム管理、分析ダッシュボード、優先サポート、SSO準備中、ゼロデータ保存自動化
+Windsurf	Enterprise	$60	毎月1000クレジット/user ハイブリッド／オンプレ、SOC‑2/GDPR対応、専任担当者

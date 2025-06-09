@@ -1,111 +1,624 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AIエージェント インタラクティブレポート</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" href="styles.css">
-  <!-- Visualization & Content Choices:
-        - Report Info: AI agents, features, pricing, GitHub integration, AI models. Goal: Detailed understanding & comparison. Viz/Presentation: Cards for agents, clickable for modal. Modal enhanced with 'Models Used' and 'Reference URLs'. Interaction: Click to expand. Justification: Easy scanning, then deep dive into structured, sourced information. Library/Method: HTML/Tailwind, JS.
-        - Report Info: Comparative table data. Goal: Easy cross-agent comparison. Viz/Presentation: Interactive HTML table. Interaction: Sort/filter. Justification: Facilitates direct comparison. Library/Method: HTML/Tailwind, JS.
-        - Report Info: Autonomy levels. Goal: Visual comparison. Viz/Presentation: Bar chart. Interaction: Tooltips. Justification: Visualizes quantitative differences. Library/Method: Chart.js.
-        - Report Info: Differentiating factors. Goal: In-depth understanding of key concepts. Viz/Presentation: Accordions. Interaction: Click to expand/collapse. Justification: Organizes dense info. Library/Method: HTML/Tailwind, JS.
-        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIエージェント比較ガイド 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'gradient-x': 'gradient-x 15s ease infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-in': 'fade-in 0.6s ease-out forwards',
+                        'slide-up': 'slide-up 0.6s ease-out forwards',
+                    },
+                    keyframes: {
+                        'gradient-x': {
+                            '0%, 100%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'left center'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center'
+                            },
+                        },
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        'fade-in': {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        'slide-up': {
+                            '0%': { opacity: '0', transform: 'translateY(40px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe);
+            background-size: 400% 400%;
+            animation: gradient-x 15s ease infinite;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .agent-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(0);
+        }
+        
+        .agent-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .search-input {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+        
+        .filter-button {
+            transition: all 0.2s ease;
+        }
+        
+        .filter-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .price-badge {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .company-badge {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+    </style>
 </head>
+<body class="min-h-screen bg-gray-50">
+    <!-- Hero Section -->
+    <header class="gradient-bg text-white">
+        <div class="container mx-auto px-4 py-16">
+            <div class="text-center max-w-4xl mx-auto">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
+                    AIエージェント
+                    <span class="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-pink-500">
+                        比較ガイド 2025
+                    </span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90 animate-slide-up">
+                    最新のAIコーディングエージェントを徹底比較。あなたに最適なツールを見つけよう。
+                </p>
+                
+                <!-- Search Bar -->
+                <div class="max-w-2xl mx-auto animate-slide-up">
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            id="searchInput"
+                            placeholder="エージェント名、会社名で検索..."
+                            class="w-full px-6 py-4 rounded-full text-gray-800 search-input text-lg shadow-lg focus:outline-none focus:ring-4 focus:ring-white/30"
+                        >
+                        <svg class="w-6 h-6 text-gray-500 absolute right-6 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
-<body class="bg-stone-100 text-slate-800 antialiased">
+    <main class="container mx-auto px-4 py-12">
+        <!-- Filter Controls -->
+        <section class="mb-12">
+            <div class="bg-white rounded-2xl shadow-xl p-6 glass-card">
+                <div class="flex flex-wrap gap-4 items-center justify-between">
+                    <h2 class="text-2xl font-bold text-gray-800">フィルター & ソート</h2>
+                    
+                    <div class="flex flex-wrap gap-3">
+                        <!-- Company Filter -->
+                        <div class="flex flex-wrap gap-2" id="companyFilters">
+                            <button class="filter-button px-4 py-2 rounded-full bg-gray-100 text-gray-700 font-medium" data-type="company" data-value="all">
+                                すべて
+                            </button>
+                        </div>
+                        
+                        <!-- Price Filter -->
+                        <div class="flex flex-wrap gap-2" id="priceFilters">
+                            <button class="filter-button px-4 py-2 rounded-full bg-gray-100 text-gray-700 font-medium" data-type="price" data-value="all">
+                                全料金
+                            </button>
+                            <button class="filter-button px-4 py-2 rounded-full bg-gray-100 text-gray-700 font-medium" data-type="price" data-value="free">
+                                無料
+                            </button>
+                            <button class="filter-button px-4 py-2 rounded-full bg-gray-100 text-gray-700 font-medium" data-type="price" data-value="paid">
+                                有料
+                            </button>
+                        </div>
+                        
+                        <!-- Sort Options -->
+                        <select id="sortSelect" class="px-4 py-2 rounded-full bg-gray-100 text-gray-700 font-medium border-none outline-none">
+                            <option value="name">名前順</option>
+                            <option value="company">会社順</option>
+                            <option value="price-low">価格：安い順</option>
+                            <option value="price-high">価格：高い順</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <header class="bg-white shadow-lg sticky top-0 z-40">
-    <div class="container mx-auto px-4 py-3 flex flex-col sm:flex-row justify-between items-center">
-      <h1 class="text-3xl font-bold text-sky-700">AIエージェント インタラクティブレポート</h1>
-      <nav id="mainNav" class="mt-2 sm:mt-0 flex flex-wrap justify-center">
-        <button class="nav-button active" data-section="intro">はじめに</button>
-        <button class="nav-button" data-section="agents">主要AIエージェント</button>
-        <button class="nav-button" data-section="comparison">比較分析</button>
-      </nav>
+        <!-- Loading State -->
+        <div id="loadingState" class="text-center py-20">
+            <div class="loading-spinner mx-auto mb-4"></div>
+            <p class="text-gray-600 text-lg">データを読み込み中...</p>
+        </div>
+
+        <!-- Agent Cards Grid -->
+        <section id="agentGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 hidden">
+            <!-- Cards will be dynamically generated here -->
+        </section>
+
+        <!-- No Results State -->
+        <div id="noResults" class="text-center py-20 hidden">
+            <svg class="w-24 h-24 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.47-.881-6.08-2.33"></path>
+            </svg>
+            <h3 class="text-2xl font-bold text-gray-600 mb-2">検索結果が見つかりません</h3>
+            <p class="text-gray-500">別の検索条件をお試しください</p>
+        </div>
+    </main>
+
+    <!-- Agent Detail Modal -->
+    <div id="agentModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-backdrop absolute inset-0" onclick="closeModal()"></div>
+        <div class="relative z-10 flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h2 id="modalTitle" class="text-3xl font-bold text-gray-800 mb-2"></h2>
+                            <span id="modalCompany" class="company-badge text-white px-3 py-1 rounded-full text-sm font-medium"></span>
+                        </div>
+                        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div id="modalContent" class="space-y-6">
+                        <!-- Modal content will be dynamically generated -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </header>
 
-  <main class="container mx-auto px-4 py-8">
-    <section id="intro" class="content-section">
-      <h2 class="section-title">はじめに</h2>
-      <p class="mb-4 text-lg">
-        AIエージェントは、ソフトウェア開発の風景を根本から変革しつつある革新的なツール群です。これらのエージェントは、大規模言語モデル（LLM）の能力を活用し、コードの生成、補完、デバッグ、テスト、リファクタリング、さらにはプロジェクト全体の管理といった多岐にわたる開発タスクを自動化・支援します。開発者は反復的な作業から解放され、より創造的で戦略的な問題解決に集中できるようになります。
-      </p>
-    </section>
-
-    <section id="agents" class="content-section">
-      <h2 class="section-title">主要AIエージェントの概要</h2>
-      <p class="mb-6">
-        現在市場で注目されている主要なAIエージェントを紹介します。各カードをクリックすると、詳細な情報（主な機能、ユニークな強み、対応IDE、価格モデル、GitHub連携など）が表示されます。
-      </p>
-      <div id="agentCardsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      </div>
-    </section>
-
-    <section id="comparison" class="content-section">
-      <h2 class="section-title">AIエージェント比較分析</h2>
-      <p class="mb-4">AIエージェントの選定は、組織のニーズ、開発環境、セキュリティ要件、そして予算に大きく依存します。ここでは、主要なエージェントを多角的に比較し、その差別化要因と選定のポイントを分析します。</p>
-
-      <div class="my-6 p-6 bg-white rounded-xl shadow-xl">
-        <h3 class="text-xl font-semibold text-sky-600 mb-3">主要機能・特性比較表</h3>
-        <p class="mb-4 text-sm text-slate-600">
-          以下の表は、主要なAIエージェントの特性を一覧で比較できます。列名をクリックしてソートしたり、フィルターを使用して特定の条件に合うエージェントを絞り込めます。
-        </p>
-        <div id="filterContainer" class="mb-4 flex flex-wrap items-center gap-2">
-          <input type="text" id="nameFilter" placeholder="エージェント名で検索..."
-            class="filter-input px-3 py-2 border border-slate-300 rounded-md focus:ring-sky-500 focus:border-sky-500">
-          <select id="ideFilter"
-            class="filter-select px-3 py-2 border border-slate-300 rounded-md focus:ring-sky-500 focus:border-sky-500">
-            <option value="">対応IDE (全て)</option>
-          </select>
-          <select id="pricingFilter"
-            class="filter-select px-3 py-2 border border-slate-300 rounded-md focus:ring-sky-500 focus:border-sky-500">
-            <option value="">価格モデル (全て)</option>
-          </select>
-          <button id="resetFilters"
-            class="bg-slate-500 hover:bg-slate-600 text-white font-semibold py-2 px-4 rounded-md transition duration-150 ease-in-out">フィルター解除</button>
+    <!-- Footer with Version History -->
+    <footer class="bg-white shadow-lg mt-16">
+        <div class="container mx-auto px-4 py-8">
+            <section>
+                <h2 class="text-2xl font-bold text-sky-700 mb-6">更新履歴</h2>
+                <div class="space-y-4">
+                    <div class="bg-slate-50 p-6 rounded-lg border-l-4 border-sky-500">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Version 2.0 - AIエージェント比較ガイド 2025</h3>
+                        <p class="text-sm text-slate-600 mb-3">最新のAIエージェント情報とモダンなUI/UX</p>
+                        <div class="flex items-center space-x-4">
+                            <span class="text-xs text-slate-500">TSVデータ統合、リアルタイム検索、レスポンシブデザイン</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-lg border-l-4 border-sky-500">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Version 1.0 - AIエージェント インタラクティブレポート</h3>
+                        <p class="text-sm text-slate-600 mb-3">初版リリース - 主要AIエージェントの包括的な比較分析</p>
+                        <div class="flex items-center space-x-4">
+                            <a href="version1.html" 
+                               class="inline-flex items-center px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white font-medium rounded-md transition duration-150 ease-in-out">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                                Version 1.0を開く
+                            </a>
+                            <span class="text-xs text-slate-500">AIエージェントの詳細比較、インタラクティブテーブル、モーダル機能を含む</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-        <div class="overflow-x-auto">
-          <table id="comparisonTable" class="min-w-full bg-white">
-            <thead>
-              <tr>
-                <th data-sort="name">AIエージェント名（提供企業）</th>
-                <th data-sort="ide">対応IDE</th>
-                <th data-sort="pricing">価格モデル（詳細）</th>
-                <th data-sort="autonomy">自律性レベル</th>
-                <th data-sort="github_integration">GitHub連携（PR作成）</th>
-                <th data-sort="strength">ユニークな強み</th>
-              </tr>
-            </thead>
-            <tbody id="comparisonTableBody"></tbody>
-          </table>
-        </div>
-      </div>
+    </footer>
 
-      <div class="my-6">
-        <h3 class="text-xl font-semibold text-sky-600 mb-3">差別化要因と選定のポイント</h3>
-        <p class="mb-4 text-sm text-slate-600">AIエージェントを選定する上で重要な差別化要因です。各項目をクリックして詳細を確認してください。</p>
-        <div id="differentiationFactorsContainer">
-        </div>
-      </div>
-    </section>
-  </main>
+    <!-- JavaScript -->
+    <script>
+        // Global variables
+        let agentsData = [];
+        let plansData = [];
+        let combinedData = [];
+        let currentFilters = {
+            company: 'all',
+            price: 'all',
+            search: ''
+        };
 
-  <div id="agentModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 id="modalAgentName" class="text-2xl font-bold text-sky-700"></h3>
-        <span class="modal-close" onclick="closeModal()">&times;</span>
-      </div>
-      <div id="modalAgentDetails" class="text-slate-700 detail-grid"></div>
-    </div>
-  </div>
+        // Utility functions
+        function parseTSV(tsvText) {
+            const lines = tsvText.trim().split('\n');
+            // ヘッダーから余分なスペースを除去
+            const headers = lines[0].split('\t').map(header => header.trim());
+            
+            return lines.slice(1).map(line => {
+                const values = line.split('\t');
+                const obj = {};
+                headers.forEach((header, index) => {
+                    obj[header] = values[index] || '';
+                });
+                return obj;
+            });
+        }
 
-  <script src="scripts.js"></script>
+        // Data loading and processing
+        async function loadData() {
+            try {
+                const [agentsResponse, plansResponse] = await Promise.all([
+                    fetch('data/agent_list.tsv'),
+                    fetch('data/agent_list_plan.tsv')
+                ]);
+
+                if (!agentsResponse.ok || !plansResponse.ok) {
+                    throw new Error('Failed to load data files');
+                }
+
+                const agentsText = await agentsResponse.text();
+                const plansText = await plansResponse.text();
+
+                agentsData = parseTSV(agentsText);
+                plansData = parseTSV(plansText);
+
+                combineData();
+                return true;
+            } catch (error) {
+                console.error('Error loading data:', error);
+                return false;
+            }
+        }
+
+        function combineData() {
+            // エージェント名のマッピング辞書
+            const nameMapping = {
+                'GitHub Copilot': 'Copilot',
+                'Cursor': 'Cursor',
+                'Devin': 'Devin',
+                'Claude Code': 'Claude Code',
+                'OpenAI Codex': 'Codex',
+                'Jules(beta)': 'Jules',
+                'Gemini Code Assist': 'Gemini Code Assist',
+                'Windsurf': 'Windsurf'
+            };
+
+            combinedData = agentsData.map(agent => {
+                const mappedName = nameMapping[agent['エージェント名']] || agent['エージェント名'];
+                
+                // プランデータをフィルタリング
+                const agentPlans = plansData.filter(plan => {
+                    const planAgentName = plan['AIエージェント名']?.trim();
+                    return planAgentName === mappedName || 
+                           planAgentName === agent['エージェント名'];
+                });
+
+
+                const minPrice = getMinPrice(agentPlans);
+                const hasFreePlan = agentPlans.some(plan => 
+                    plan['価格']?.includes('$0') || 
+                    plan['価格']?.includes('無料') || 
+                    plan['価格']?.includes('Free')
+                );
+
+                return {
+                    ...agent,
+                    plans: agentPlans,
+                    minPrice: minPrice,
+                    hasFree: hasFreePlan,
+                    displayPrice: hasFreePlan ? '無料あり' : minPrice > 0 ? `$${minPrice}～` : '要相談'
+                };
+            });
+        }
+
+        function getMinPrice(plans) {
+            if (!plans || plans.length === 0) return 0;
+            
+            const prices = plans.map(plan => {
+                const priceText = plan['価格'] || '';
+                if (priceText.includes('$0') || priceText.includes('無料') || priceText.includes('Free')) return 0;
+                const match = priceText.match(/\$(\d+)/);
+                return match ? parseInt(match[1]) : Infinity;
+            }).filter(price => price !== Infinity);
+
+            return prices.length > 0 ? Math.min(...prices) : 0;
+        }
+
+        // UI Rendering
+        function renderAgentCards(data = combinedData) {
+            const grid = document.getElementById('agentGrid');
+            const noResults = document.getElementById('noResults');
+
+            if (data.length === 0) {
+                grid.classList.add('hidden');
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            noResults.classList.add('hidden');
+            grid.classList.remove('hidden');
+
+            grid.innerHTML = data.map(agent => createAgentCard(agent)).join('');
+        }
+
+        function createAgentCard(agent) {
+            const logoUrl = getCompanyLogo(agent['提供会社']);
+            const formBadge = getFormBadge(agent['提供形式']);
+            
+            return `
+                <div class="agent-card bg-white rounded-2xl shadow-lg p-6 cursor-pointer hover:shadow-2xl" 
+                     onclick="openModal('${agent['エージェント名']}')">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
+                            ${agent['エージェント名'].charAt(0)}
+                        </div>
+                        <span class="price-badge text-white px-3 py-1 rounded-full text-sm font-medium">
+                            ${agent.displayPrice}
+                        </span>
+                    </div>
+                    
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">${agent['エージェント名']}</h3>
+                    <p class="company-badge text-white px-2 py-1 rounded-full text-xs font-medium mb-3 inline-block">
+                        ${agent['提供会社']}
+                    </p>
+                    
+                    <div class="space-y-2 mb-4">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            ${agent['提供形式']}
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            ${agent['使用可能モデル'].length > 50 ? agent['使用可能モデル'].substring(0, 50) + '...' : agent['使用可能モデル']}
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-gray-500">${agent.plans.length} プラン</span>
+                        <button class="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors">
+                            詳細を見る →
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getCompanyLogo(company) {
+            const logos = {
+                'Microsoft': '🔷',
+                'Anysphere': '⚡',
+                'Cognition Labs': '🧠',
+                'Anthropic': '🤖',
+                'OpenAI': '🔥',
+                'Google': '🔍',
+                'Windsurf Inc.': '🌊'
+            };
+            return logos[company] || '🚀';
+        }
+
+        function getFormBadge(form) {
+            if (form.includes('VS Code')) return 'VS Code';
+            if (form.includes('独立IDE')) return 'IDE';
+            if (form.includes('Webアプリ')) return 'Web';
+            if (form.includes('CLI')) return 'CLI';
+            return form;
+        }
+
+        // Modal functionality
+        function openModal(agentName) {
+            const agent = combinedData.find(a => a['エージェント名'] === agentName);
+            if (!agent) return;
+
+            document.getElementById('modalTitle').textContent = agent['エージェント名'];
+            document.getElementById('modalCompany').textContent = agent['提供会社'];
+
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">基本情報</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <span class="font-medium text-gray-600">使用可能モデル:</span>
+                                <p class="text-gray-800">${agent['使用可能モデル']}</p>
+                            </div>
+                            <div>
+                                <span class="font-medium text-gray-600">提供形式:</span>
+                                <p class="text-gray-800">${agent['提供形式']}</p>
+                            </div>
+                            <div>
+                                <span class="font-medium text-gray-600">備考:</span>
+                                <p class="text-gray-800">${agent['備考']}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">料金プラン (${agent.plans.length}件)</h3>
+                        <div class="space-y-4">
+                            ${agent.plans.length > 0 ? agent.plans.map(plan => `
+                                <div class="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <h4 class="font-semibold text-gray-800 text-lg">${plan['プラン'] || '不明'}</h4>
+                                        <span class="price-badge text-white px-3 py-1 rounded-full text-sm font-medium">${plan['価格'] || '不明'}</span>
+                                    </div>
+                                    <div class="text-sm text-gray-600 leading-relaxed">
+                                        <p class="whitespace-pre-line">${(plan['特徴'] || '特徴情報が見つかりません').replace(/ /g, '\n')}</p>
+                                    </div>
+                                </div>
+                            `).join('') : '<p class="text-gray-500 text-center py-4">料金プラン情報が見つかりませんでした</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('agentModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('agentModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Filter and search functionality
+        function initializeFilters() {
+            const companies = [...new Set(combinedData.map(agent => agent['提供会社']))];
+            const companyFilters = document.getElementById('companyFilters');
+            
+            companies.forEach(company => {
+                const button = document.createElement('button');
+                button.className = 'filter-button px-4 py-2 rounded-full bg-gray-100 text-gray-700 font-medium';
+                button.setAttribute('data-type', 'company');
+                button.setAttribute('data-value', company);
+                button.textContent = company;
+                companyFilters.appendChild(button);
+            });
+
+            // Add event listeners
+            document.addEventListener('click', handleFilterClick);
+            document.getElementById('sortSelect').addEventListener('change', handleSort);
+            document.getElementById('searchInput').addEventListener('input', handleSearch);
+        }
+
+        function handleFilterClick(e) {
+            if (!e.target.classList.contains('filter-button')) return;
+
+            const type = e.target.getAttribute('data-type');
+            const value = e.target.getAttribute('data-value');
+
+            // Update active state
+            document.querySelectorAll(`[data-type="${type}"]`).forEach(btn => {
+                btn.classList.remove('active');
+            });
+            e.target.classList.add('active');
+
+            // Update filter
+            currentFilters[type] = value;
+            applyFilters();
+        }
+
+        function handleSort(e) {
+            const sortBy = e.target.value;
+            let sortedData = [...getFilteredData()];
+
+            switch (sortBy) {
+                case 'name':
+                    sortedData.sort((a, b) => a['エージェント名'].localeCompare(b['エージェント名'], 'ja'));
+                    break;
+                case 'company':
+                    sortedData.sort((a, b) => a['提供会社'].localeCompare(b['提供会社'], 'ja'));
+                    break;
+                case 'price-low':
+                    sortedData.sort((a, b) => a.minPrice - b.minPrice);
+                    break;
+                case 'price-high':
+                    sortedData.sort((a, b) => b.minPrice - a.minPrice);
+                    break;
+            }
+
+            renderAgentCards(sortedData);
+        }
+
+        function handleSearch(e) {
+            currentFilters.search = e.target.value.toLowerCase();
+            applyFilters();
+        }
+
+        function getFilteredData() {
+            return combinedData.filter(agent => {
+                const matchesCompany = currentFilters.company === 'all' || agent['提供会社'] === currentFilters.company;
+                const matchesPrice = currentFilters.price === 'all' || 
+                    (currentFilters.price === 'free' && agent.hasFree) ||
+                    (currentFilters.price === 'paid' && !agent.hasFree);
+                const matchesSearch = !currentFilters.search || 
+                    agent['エージェント名'].toLowerCase().includes(currentFilters.search) ||
+                    agent['提供会社'].toLowerCase().includes(currentFilters.search);
+
+                return matchesCompany && matchesPrice && matchesSearch;
+            });
+        }
+
+        function applyFilters() {
+            const filteredData = getFilteredData();
+            renderAgentCards(filteredData);
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', async () => {
+            const loadingState = document.getElementById('loadingState');
+            
+            const dataLoaded = await loadData();
+            
+            if (dataLoaded) {
+                loadingState.classList.add('hidden');
+                initializeFilters();
+                renderAgentCards();
+                
+                // Set default active filters
+                document.querySelector('[data-value="all"][data-type="company"]').classList.add('active');
+                document.querySelector('[data-value="all"][data-type="price"]').classList.add('active');
+            } else {
+                loadingState.innerHTML = `
+                    <div class="text-red-600">
+                        <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p class="text-lg font-medium">データの読み込みに失敗しました</p>
+                    </div>
+                `;
+            }
+        });
+    </script>
 </body>
-
 </html>
