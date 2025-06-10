@@ -493,7 +493,7 @@
                                         <span class="price-badge text-white px-3 py-1 rounded-full text-sm font-medium">${plan['価格'] || '不明'}</span>
                                     </div>
                                     <div class="text-sm text-gray-600 leading-relaxed">
-                                        <p class="whitespace-pre-line">${(plan['特徴'] || '特徴情報が見つかりません').replace(/ /g, '\n')}</p>
+                                        <p class="whitespace-pre-line">${plan['特徴'] || '特徴情報が見つかりません'}</p>
                                     </div>
                                 </div>
                             `).join('') : '<p class="text-gray-500 text-center py-4">料金プラン情報が見つかりませんでした</p>'}
