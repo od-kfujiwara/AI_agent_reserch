@@ -57,11 +57,11 @@
   },
   {
     "name": "Claude Code (Anthropic)",
-    "ide": "IDE拡張あり, CLI",
-    "pricing": "フリーミアム (Pro: $20/月)",
-    "autonomy": "中",
-    "github_integration": "GitHub Actions連携",
-    "strength": "CLIからのコード修正"
+    "ide": "VSCode拡張, CLI",
+    "pricing": "フリーミアム (Free: $0/月, Pro: $20/月または$200/年, Max: $100/月, Ultra Max: $200/月, Team: $30/月)",
+    "autonomy": "中～高",
+    "github_integration": "@claudeメンションで自動PR作成・レビュー",
+    "strength": "CLAUDE.md管理、MCP拡張、GitHub深い連携"
   },
   {
     "name": "Tabnine (Tabnine)",

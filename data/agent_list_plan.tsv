@@ -10,10 +10,12 @@ Cursor	Business	$40/$32(年額)	Pro +α組織全体でのプライバシーモ�
 Devin	Core	$20(初期費用)	初期9ACU(以降従量課金のみ) 同時最大10個のセッションを並行して実行可能 ユーザー数の制限はなくチームで利用可能 エージェントIDE、Interactive Planning、Devin Search、Devin Wikiなどの最新機能が利用可能
 Devin	Team	$500	初期250ACU/月(超過で従量課金) 同時実行セッション数は無制限 DevinのAPIアクセス権が付与され、外部ツール連携やカスタマイズが容易
 Devin	Enterprise	相談	エンタープライズ向けカスタム機能とサポート
-Claude Code	Pro	$20	Sonnetへのアクセス 5時間ごとにClaudeで約45メッセージを送信、またはClaude Codeで約10-40プロンプトを送信
-Claude Code	Max 5×	$100	Pro比5倍の利用枠 Opusへのアクセス 5時間ごとにClaudeで約225メッセージを送信、またはClaude Codeで約50-200プロンプトを送信
-Claude Code	Max 20×	$200	Pro比20倍の利用枠 Opusへのアクセス 5時間ごとにClaudeで約900メッセージを送信、またはClaude Codeで約200-800プロンプトを送信
-Claude Code	Team	$30/$25(年額)	最低5名から利用可能 チーム管理機能とコラボレーション機能
+Claude Code	Free	$0	Sonnetへのアクセス 利用回数制限あり（約5時間で10回程度）
+Claude Code	Pro	$20/$200(年額)	Sonnet/Opusへのアクセス 約5時間で40～45回のメッセージ送信 Claude Codeで約10-40プロンプト送信 年額で$40お得
+Claude Code	Max	$100	Pro比5倍の利用枠 Opusへのアクセス 約5時間で225回のメッセージ送信 Claude Codeで約50-200プロンプト送信
+Claude Code	Ultra Max	$200	Pro比20倍の利用枠 Opusへのアクセス 約5時間で900回のメッセージ送信 Claude Codeで約200-800プロンプト送信
+Claude Code	Team	$30/$25(年額)	最低5名から利用可能 チーム管理機能とコラボレーション機能 共同作業機能あり
+Claude Code	Enterprise	相談	大規模利用向けカスタムプラン 高度なセキュリティ SAML/SSO連携対応
 Codex	Pro	$200	プロフェッショナル向けプラン
 Codex	Team	$30/$25(年額)	チーム向けプラン
 Codex	Enterprise	相談	エンタープライズ向けカスタムプラン
